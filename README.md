@@ -2,6 +2,8 @@
 
 This project is a C implementation of a modified ElGamal cryptosystem based on Pell conics, using the GMP library for arbitrary-precision integer arithmetic.
 
+> This is an experimental prototype. It has been improved for better API robustness and RNG handling, but it is not certified for production cryptographic use.
+
 ## Main features
 
 The project includes:
@@ -91,3 +93,12 @@ If GMP is already available in your environment, run:
 
 ```bash
 make
+```
+
+## Test
+
+Verify the example flow with:
+
+```bash
+make check
+```

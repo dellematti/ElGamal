@@ -3,6 +3,6 @@
 
 #include "keys.h"
 
-Keys gen(int n);
+int gen(Keys *keys, int n);
 
 #endif

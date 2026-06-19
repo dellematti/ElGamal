@@ -1,17 +1,19 @@
 #ifndef KEYS_H
 #define KEYS_H
 
+#include <gmp.h>
+
 typedef struct {
-    char *q;
-    char *d;
-    char *xG;
-    char *yG;
-    char *xH;
-    char *yH;
+    mpz_t q;
+    mpz_t d;
+    mpz_t xG;
+    mpz_t yG;
+    mpz_t xH;
+    mpz_t yH;
 } PublicKey;
 
 typedef struct {
-    char *k;
+    mpz_t k;
 } SecretKey;
 
 typedef struct {
@@ -19,6 +21,7 @@ typedef struct {
     SecretKey sk;
 } Keys;
 
+void keys_init(Keys *keys);
 void keys_clear(Keys *keys);
 
 #endif

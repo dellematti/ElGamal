@@ -6,6 +6,6 @@
 #include "ciphertext.h"
 #include "keys.h"
 
-void funzioneDec(mpz_t output, CipherText ct, Keys keys);
+int decrypt(mpz_t output, const CipherText *ct, const Keys *keys);
 
 #endif

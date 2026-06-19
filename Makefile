@@ -3,7 +3,7 @@ CFLAGS = -O3 -Wall -Wextra -std=c11
 DEBUGFLAGS = -O0 -g -Wall -Wextra -std=c11
 LIBS = -lgmp
 
-SRC = elGamalPell.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c
+SRC = elGamalPell.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c
 OUT = elGamalPell.out
 
 BENCH_DIR = benchmark
@@ -17,7 +17,7 @@ BENCH_GEN_OUT = $(BENCH_DIR)/benchmarkGen.out
 BENCH_ENC_OUT = $(BENCH_DIR)/benchmarkEnc.out
 BENCH_DEC_OUT = $(BENCH_DIR)/benchmarkDec.out
 
-.PHONY: all debug run clean bench bench-gen bench-enc bench-dec bench-all
+.PHONY: all debug run check clean bench bench-gen bench-enc bench-dec bench-all
 
 all: $(OUT)
 
@@ -30,6 +30,9 @@ debug:
 run: $(OUT)
 	./$(OUT)
 
+check: $(OUT)
+	./$(OUT)
+
 bench: $(BENCH_FULL_OUT)
 
 bench-gen: $(BENCH_GEN_OUT)
@@ -40,17 +43,17 @@ bench-dec: $(BENCH_DEC_OUT)
 
 bench-all: $(BENCH_FULL_OUT) $(BENCH_GEN_OUT) $(BENCH_ENC_OUT) $(BENCH_DEC_OUT)
 
-$(BENCH_FULL_OUT): $(BENCH_FULL_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c
-	$(CC) $(CFLAGS) $(BENCH_FULL_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c $(LIBS) -o $(BENCH_FULL_OUT)
+$(BENCH_FULL_OUT): $(BENCH_FULL_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c
+	$(CC) $(CFLAGS) $(BENCH_FULL_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c $(LIBS) -o $(BENCH_FULL_OUT)
 
-$(BENCH_GEN_OUT): $(BENCH_GEN_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c
-	$(CC) $(CFLAGS) $(BENCH_GEN_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c $(LIBS) -o $(BENCH_GEN_OUT)
+$(BENCH_GEN_OUT): $(BENCH_GEN_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c gen.c enc.c dec.c random.c
+	$(CC) $(CFLAGS) $(BENCH_GEN_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c gen.c enc.c dec.c random.c $(LIBS) -o $(BENCH_GEN_OUT)
 
-$(BENCH_ENC_OUT): $(BENCH_ENC_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c
-	$(CC) $(CFLAGS) $(BENCH_ENC_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c $(LIBS) -o $(BENCH_ENC_OUT)
+$(BENCH_ENC_OUT): $(BENCH_ENC_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c
+	$(CC) $(CFLAGS) $(BENCH_ENC_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c $(LIBS) -o $(BENCH_ENC_OUT)
 
-$(BENCH_DEC_OUT): $(BENCH_DEC_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c
-	$(CC) $(CFLAGS) $(BENCH_DEC_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c $(LIBS) -o $(BENCH_DEC_OUT)
+$(BENCH_DEC_OUT): $(BENCH_DEC_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c
+	$(CC) $(CFLAGS) $(BENCH_DEC_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c $(LIBS) -o $(BENCH_DEC_OUT)
 
 clean:
 	rm -f $(OUT) \

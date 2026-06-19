@@ -1,22 +1,22 @@
 #include "modSqrt.h"
 
 // Restituisce in "out" una radice quadrata di a modulo p tramite Tonelli-Shanks.
-// Se non esiste, out viene impostato a 0.
-void modSqrt(mpz_t out, const mpz_t a, const mpz_t p) {
+// Se la radice esiste, restituisce 1. Altrimenti restituisce 0.
+int modSqrt(mpz_t out, const mpz_t a, const mpz_t p) {
     mpz_set_ui(out, 0);
 
     if (mpz_cmp_ui(a, 0) == 0) {
         mpz_set_ui(out, 0);
-        return;
+        return 1;
     }
 
     if (mpz_cmp_ui(p, 2) == 0) {
         mpz_mod_ui(out, a, 2);
-        return;
+        return 1;
     }
 
     if (mpz_jacobi(a, p) != 1) {
-        return;
+        return 0;
     }
 
     mpz_t tmp, q, z, r, t, c, t2i, b;
@@ -29,7 +29,7 @@ void modSqrt(mpz_t out, const mpz_t a, const mpz_t p) {
         mpz_fdiv_q_ui(tmp, tmp, 4);
         mpz_powm(out, a, tmp, p);
         mpz_clears(tmp, q, z, r, t, c, t2i, b, NULL);
-        return;
+        return 1;
     }
 
     // Scrive p - 1 = q * 2^s con q dispari
@@ -69,7 +69,7 @@ void modSqrt(mpz_t out, const mpz_t a, const mpz_t p) {
         if (i == m) {
             mpz_set_ui(out, 0);
             mpz_clears(tmp, q, z, r, t, c, t2i, b, NULL);
-            return;
+            return 0;
         }
 
         mpz_set_ui(tmp, 1);
@@ -89,4 +89,5 @@ void modSqrt(mpz_t out, const mpz_t a, const mpz_t p) {
 
     mpz_set(out, r);
     mpz_clears(tmp, q, z, r, t, c, t2i, b, NULL);
+    return 1;
 }

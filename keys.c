@@ -1,20 +1,23 @@
-#include <stdlib.h>
+#include <gmp.h>
 #include "keys.h"
 
-void keys_clear(Keys *keys) {
-    free(keys->pk.q);
-    free(keys->pk.d);
-    free(keys->pk.xG);
-    free(keys->pk.yG);
-    free(keys->pk.xH);
-    free(keys->pk.yH);
-    free(keys->sk.k);
+void keys_init(Keys *keys) {
+    mpz_inits(keys->pk.q, keys->pk.d,
+              keys->pk.xG, keys->pk.yG,
+              keys->pk.xH, keys->pk.yH,
+              keys->sk.k,
+              NULL);
+}
 
-    keys->pk.q = NULL;
-    keys->pk.d = NULL;
-    keys->pk.xG = NULL;
-    keys->pk.yG = NULL;
-    keys->pk.xH = NULL;
-    keys->pk.yH = NULL;
-    keys->sk.k = NULL;
+void keys_clear(Keys *keys) {
+    if (!keys) {
+        return;
+    }
+
+    mpz_set_ui(keys->sk.k, 0);
+    mpz_clears(keys->pk.q, keys->pk.d,
+               keys->pk.xG, keys->pk.yG,
+               keys->pk.xH, keys->pk.yH,
+               keys->sk.k,
+               NULL);
 }

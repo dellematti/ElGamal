@@ -2,16 +2,19 @@
 #include <stdlib.h>
 #include <gmp.h>
 
-#include "keys.h"
 #include "ciphertext.h"
-
-Keys gen(int n);
-CipherText enc(const mpz_t msg, PublicKey pk);
-void funzioneDec(mpz_t output, CipherText ct, Keys keys);
-
+#include "dec.h"
+#include "enc.h"
+#include "gen.h"
+#include "keys.h"
 
 int main(void) {
-    Keys k = gen(512);
+    Keys k;
+    keys_init(&k);
+    if (!gen(&k, 512)) {
+        fprintf(stderr, "Key generation failed\n");
+        return EXIT_FAILURE;
+    }
 
     mpz_t msg;
     mpz_init(msg);
@@ -21,7 +24,13 @@ int main(void) {
     mpz_out_str(stdout, 10, msg);
     printf("\n\n");
 
-    CipherText ct = enc(msg, k.pk);
+    CipherText ct;
+    if (!enc(&ct, msg, &k.pk)) {
+        fprintf(stderr, "Encryption failed\n");
+        keys_clear(&k);
+        mpz_clear(msg);
+        return EXIT_FAILURE;
+    }
 
     printf("Messaggio cifrato:\n");
     mpz_out_str(stdout, 16, ct.xC1);
@@ -35,7 +44,14 @@ int main(void) {
 
     mpz_t risultato;
     mpz_init(risultato);
-    funzioneDec(risultato, ct, k);
+    if (!decrypt(risultato, &ct, &k)) {
+        fprintf(stderr, "Decryption failed\n");
+        ciphertext_clear(&ct);
+        keys_clear(&k);
+        mpz_clear(msg);
+        mpz_clear(risultato);
+        return EXIT_FAILURE;
+    }
 
     printf("\nMessaggio decifrato:\n");
     mpz_out_str(stdout, 10, risultato);

@@ -6,6 +6,6 @@
 #include "keys.h"
 #include "ciphertext.h"
 
-CipherText enc(const mpz_t msg, PublicKey pk);
+int enc(CipherText *ct, const mpz_t msg, const PublicKey *pk);
 
 #endif

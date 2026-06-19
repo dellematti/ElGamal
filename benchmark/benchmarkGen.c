@@ -25,13 +25,24 @@ int main(int argc, char *argv[]) {
 
     int keyLen = (int)key_len_long;
 
-    clock_t start = clock();
+    Keys k;
+    keys_init(&k);
 
-    Keys k = gen(keyLen);
+    struct timespec start, end;
+    if (clock_gettime(CLOCK_MONOTONIC, &start) != 0) {
+        return 1;
+    }
 
-    clock_t end = clock();
+    if (!gen(&k, keyLen)) {
+        return 1;
+    }
 
-    double elapsed = (double)(end - start) / CLOCKS_PER_SEC;
+    if (clock_gettime(CLOCK_MONOTONIC, &end) != 0) {
+        keys_clear(&k);
+        return 1;
+    }
+
+    double elapsed = benchmark_time_diff(&start, &end);
     printf("%.6f\n", elapsed);
 
     keys_clear(&k);
