@@ -1,0 +1,12 @@
+# Ignora i file eseguibili generati dal Makefile
+*.out
+
+# Ignora i file oggetto intermedi della compilazione
+*.o
+
+# Ignora le cartelle di configurazione degli editor 
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj

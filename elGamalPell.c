@@ -9,11 +9,6 @@ Keys gen(int n);
 CipherText enc(const mpz_t msg, PublicKey pk);
 void funzioneDec(mpz_t output, CipherText ct, Keys keys);
 
-// Compilazione consigliata:
-// gcc elGamalPell.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c -lgmp -O3 -o elGamalPell.out
-//
-// Esecuzione:
-// ./elGamalPell.out
 
 int main(void) {
     Keys k = gen(512);

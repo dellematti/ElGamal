@@ -22,13 +22,13 @@ BENCH_DEC_OUT = $(BENCH_DIR)/benchmarkDec.out
 all: $(OUT)
 
 $(OUT): $(SRC)
-    $(CC) $(CFLAGS) $(SRC) $(LIBS) -o $(OUT)
+	$(CC) $(CFLAGS) $(SRC) $(LIBS) -o $(OUT)
 
 debug:
-    $(CC) $(DEBUGFLAGS) $(SRC) $(LIBS) -o $(OUT)
+	$(CC) $(DEBUGFLAGS) $(SRC) $(LIBS) -o $(OUT)
 
 run: $(OUT)
-    ./$(OUT)
+	./$(OUT)
 
 bench: $(BENCH_FULL_OUT)
 
@@ -41,19 +41,19 @@ bench-dec: $(BENCH_DEC_OUT)
 bench-all: $(BENCH_FULL_OUT) $(BENCH_GEN_OUT) $(BENCH_ENC_OUT) $(BENCH_DEC_OUT)
 
 $(BENCH_FULL_OUT): $(BENCH_FULL_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c
-    $(CC) $(CFLAGS) $(BENCH_FULL_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c $(LIBS) -o $(BENCH_FULL_OUT)
+	$(CC) $(CFLAGS) $(BENCH_FULL_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c $(LIBS) -o $(BENCH_FULL_OUT)
 
 $(BENCH_GEN_OUT): $(BENCH_GEN_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c
-    $(CC) $(CFLAGS) $(BENCH_GEN_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c $(LIBS) -o $(BENCH_GEN_OUT)
+	$(CC) $(CFLAGS) $(BENCH_GEN_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c $(LIBS) -o $(BENCH_GEN_OUT)
 
 $(BENCH_ENC_OUT): $(BENCH_ENC_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c
-    $(CC) $(CFLAGS) $(BENCH_ENC_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c $(LIBS) -o $(BENCH_ENC_OUT)
+	$(CC) $(CFLAGS) $(BENCH_ENC_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c $(LIBS) -o $(BENCH_ENC_OUT)
 
 $(BENCH_DEC_OUT): $(BENCH_DEC_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c
-    $(CC) $(CFLAGS) $(BENCH_DEC_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c $(LIBS) -o $(BENCH_DEC_OUT)
+	$(CC) $(CFLAGS) $(BENCH_DEC_SRC) ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c $(LIBS) -o $(BENCH_DEC_OUT)
 
 clean:
-    rm -f $(OUT) \
+	rm -f $(OUT) \
           $(BENCH_FULL_OUT) \
           $(BENCH_GEN_OUT) \
           $(BENCH_ENC_OUT) \
