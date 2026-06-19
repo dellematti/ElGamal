@@ -1,17 +1,15 @@
 # References
 
-This project is related to the study and implementation of cryptographic constructions based on conics and Pell-type structures.
+This project draws on research in conic-based cryptography and Pell equation groups.
 
-Relevant references include:
+## Key References
 
-- **BM16** — Bellini, Murru,  
-  *An efficient and secure RSA-like cryptosystem exploiting Rédei rational functions over conics*  
-  2016
+- Bellini, E., Murru, N. (2016). "An efficient and secure RSA-like cryptosystem exploiting Rédei rational functions over conics."
+- Alecci, G., Dutto, M., Murru, N. (2022). "Pell hyperbolas in DLP-based cryptosystems."
+- Dutto, M. (2023). "DLP-based cryptosystems with Pell cubics."
 
-- **ADM22** — Alecci, Dutto, Murru,  
-  *Pell hyperbolas in DLP-based cryptosystems*  
-  2022
+## Supporting References
 
-- **Dut23** — Dutto,  
-  *DLP-based cryptosystems with Pell cubics*  
-  2023
+- GNU MP (GMP) library documentation.
+- Tonelli–Shanks modular square root algorithm.
+

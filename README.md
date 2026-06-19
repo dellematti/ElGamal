@@ -1,104 +1,84 @@
-# ElGamal Variant over Pell Conics in C
+# ElGamal over Pell Conics in C
 
-This project is a C implementation of a modified ElGamal cryptosystem based on Pell conics, using the GMP library for arbitrary-precision integer arithmetic.
+This project is a C implementation of an ElGamal-style cryptosystem built on Pell conics, utilizing the GNU Multiple Precision Arithmetic Library (GMP) for arbitrary-precision integer arithmetic. The codebase is directly inspired by recent academic research in conic-based cryptography, detailed in the accompanying `REFERENCES.md` file.
 
-> This is an experimental prototype. It has been improved for better API robustness and RNG handling, but it is not certified for production cryptographic use.
+## Project overview
 
-## Main features
+This project implements a public-key scheme based on Pell conic arithmetic, with an emphasis on:
 
-The project includes:
+- translating mathematical group operations into production-ready C code
+- separating core cryptographic logic from utility and benchmark code
+- using GMP for reliable large-integer handling
+- measuring performance with dedicated benchmark executables
+- keeping the implementation compact and reusable for study or prototyping
 
-- key generation
-- encryption
-- decryption
-- conic group operations
-- modular square root computation via Tonelli–Shanks
-- big integer arithmetic with GMP
-- benchmark programs for key generation, encryption, decryption, and full execution
-- benchmark helper scripts for statistics and raw sample collection
+## What is included
 
-## Project goal
+- modular C11 codebase with separate key generation, encryption, decryption, and conic arithmetic
+- GMP-based multi-precision arithmetic for large integer operations
+- secure randomness seeded from the operating system
+- benchmark suite for key generation, encryption, decryption, and full workflows
+- `Makefile` with `make`, `make check`, and dedicated benchmark targets
 
-The purpose of this project is educational and experimental.
+## Repository structure
 
-It was developed to explore the implementation of a non-standard ElGamal-like cryptosystem over Pell conics, with particular attention to:
+- `elGamalPell.c` — example program demonstrating key generation, encryption, and decryption. The sample main currently uses a fixed 512-bit key size and a short message for demonstration and fast execution.
+- `gen.c` / `gen.h` — key generation logic for the Pell conic ElGamal variant.
+- `enc.c` / `enc.h` — encryption implementation.
+- `dec.c` / `dec.h` — decryption implementation.
+- `conicPow.c` / `conicPow.h` — Pell conic exponentiation and group operations.
+- `modSqrt.c` / `modSqrt.h` — modular square root implementation using Tonelli–Shanks.
+- `ciphertext.c` / `ciphertext.h` — ciphertext representation and helper functions.
+- `keys.c` / `keys.h` — public/secret key structures and memory cleanup.
+- `random.c` / `random.h` — secure RNG seeding from OS entropy.
+- `Makefile` — build, test, and benchmark targets.
+- `benchmark/` — suite of benchmark programs and helpers.
 
-- translating mathematical definitions into C code
-- handling arbitrary-precision arithmetic with GMP
-- structuring a cryptographic project into multiple source files
-- working with modular arithmetic and conic-based group operations
+## Build and run
 
-## Project structure
+To build and run this project locally, you will need:
+- A C compiler (`gcc` or `clang`) with C11 support.
+- The `make` build utility.
+- GMP development libraries (`libgmp-dev` on Debian/Ubuntu, `gmp-devel` on Fedora) installed via your package manager.
 
-- `elGamalPell.c`  
-  Main entry point of the program. Demonstrates key generation, encryption, and decryption.
-
-- `gen.c` / `gen.h`  
-  Key generation logic.
-
-- `enc.c` / `enc.h`  
-  Encryption logic.
-
-- `dec.c` / `dec.h`  
-  Decryption logic.
-
-- `conicPow.c` / `conicPow.h`  
-  Conic group operations and exponentiation on the Pell conic.
-
-- `modSqrt.c` / `modSqrt.h`  
-  Modular square root computation using the Tonelli–Shanks algorithm.
-
-- `ciphertext.c` / `ciphertext.h`  
-  Ciphertext data structure and memory management helpers.
-
-- `keys.c` / `keys.h`  
-  Key data structures and memory cleanup functions.
-
-- `Makefile`  
-  Build and benchmark automation.
-
-## Benchmark structure
-
-Benchmarks are stored in the `benchmark/` directory.
-
-- `benchmark/benchmark.c`  
-  Full pipeline benchmark: key generation + encryption + decryption
-
-- `benchmark/benchmarkGen.c`  
-  Key generation benchmark
-
-- `benchmark/benchmarkEnc.c`  
-  Encryption benchmark
-
-- `benchmark/benchmarkDec.c`  
-  Decryption benchmark
-
-- `benchmark/benchmark_stats.sh`  
-  Runs a benchmark multiple times and prints summary statistics
-
-- `benchmark/benchmark_values.sh`  
-  Runs a benchmark multiple times and saves raw timing samples to a file
-
-## Requirements
-
-To build this project, you need:
-
-- GCC
-- Make
-- GMP
-
-## Build
-
-If GMP is already available in your environment, run:
+Build the main program with:  
 
 ```bash
 make
 ```
 
-## Test
+Run the example demo:
 
-Verify the example flow with:
+```bash
+./elGamalPell.out
+```
+
+Compile and run the project in a single step:
+```bash
+make run
+```
+
+Verify the execution target:
 
 ```bash
 make check
 ```
+
+## Benchmarks
+
+Build all the benchmark utilities (generation, encryption, decryption, and full workflow) at once:
+
+```bash
+make bench-all
+```
+
+Run a specific benchmark executable by passing the desired bit-length for the prime (e.g., 512 bits for encryption):
+
+```bash
+./benchmark/benchmarkEnc.out 512
+```
+
+## Disclaimer
+
+> Experimental prototype for research and learning. Not audited for production cryptographic use.
+

@@ -11,6 +11,8 @@
 int main(void) {
     Keys k;
     keys_init(&k);
+    // 512-bit keys are used for example purposes and fast execution.
+    // Not intended as a production security parameter.
     if (!gen(&k, 512)) {
         fprintf(stderr, "Key generation failed\n");
         return EXIT_FAILURE;
