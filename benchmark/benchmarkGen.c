@@ -1,7 +1,11 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <gmp.h>
 
+#include "benchmark_common.h"
 #include "../gen.h"
 #include "../keys.h"
 

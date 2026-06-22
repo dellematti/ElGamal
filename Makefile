@@ -46,8 +46,8 @@ bench-all: $(BENCH_FULL_OUT) $(BENCH_GEN_OUT) $(BENCH_ENC_OUT) $(BENCH_DEC_OUT)
 $(BENCH_FULL_OUT): $(BENCH_FULL_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c
 	$(CC) $(CFLAGS) $(BENCH_FULL_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c $(LIBS) -o $(BENCH_FULL_OUT)
 
-$(BENCH_GEN_OUT): $(BENCH_GEN_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c gen.c enc.c dec.c random.c
-	$(CC) $(CFLAGS) $(BENCH_GEN_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c gen.c enc.c dec.c random.c $(LIBS) -o $(BENCH_GEN_OUT)
+$(BENCH_GEN_OUT): $(BENCH_GEN_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c
+	$(CC) $(CFLAGS) $(BENCH_GEN_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c $(LIBS) -o $(BENCH_GEN_OUT)
 
 $(BENCH_ENC_OUT): $(BENCH_ENC_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c
 	$(CC) $(CFLAGS) $(BENCH_ENC_SRC) benchmark/benchmark_common.c ciphertext.c keys.c conicPow.c modSqrt.c gen.c enc.c dec.c random.c $(LIBS) -o $(BENCH_ENC_OUT)
