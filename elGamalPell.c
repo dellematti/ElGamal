@@ -13,6 +13,7 @@ int main(void) {
     keys_init(&k);
     // 512-bit keys are used for example purposes and fast execution.
     // Not intended as a production security parameter.
+    // Other possible values are 1024, 1536, 3840, and 7680.
     if (!gen(&k, 512)) {
         fprintf(stderr, "Key generation failed\n");
         return EXIT_FAILURE;
@@ -22,7 +23,7 @@ int main(void) {
     mpz_init(msg);
     mpz_set_ui(msg, 123456);
 
-    printf("\nMessaggio iniziale:\n");
+    printf("\nOriginal message:\n");
     mpz_out_str(stdout, 10, msg);
     printf("\n\n");
 
@@ -34,7 +35,7 @@ int main(void) {
         return EXIT_FAILURE;
     }
 
-    printf("Messaggio cifrato:\n");
+    printf("Ciphertext:\n");
     mpz_out_str(stdout, 16, ct.xC1);
     printf("\n");
     mpz_out_str(stdout, 16, ct.yC1);
@@ -44,25 +45,25 @@ int main(void) {
     mpz_out_str(stdout, 16, ct.yC2);
     printf("\n");
 
-    mpz_t risultato;
-    mpz_init(risultato);
-    if (!decrypt(risultato, &ct, &k)) {
+    mpz_t decrypted_msg;
+    mpz_init(decrypted_msg);
+    if (!decrypt(decrypted_msg, &ct, &k)) {
         fprintf(stderr, "Decryption failed\n");
         ciphertext_clear(&ct);
         keys_clear(&k);
         mpz_clear(msg);
-        mpz_clear(risultato);
+        mpz_clear(decrypted_msg);
         return EXIT_FAILURE;
     }
 
-    printf("\nMessaggio decifrato:\n");
-    mpz_out_str(stdout, 10, risultato);
+    printf("\nDecrypted message:\n");
+    mpz_out_str(stdout, 10, decrypted_msg);
     printf("\n");
 
     ciphertext_clear(&ct);
     keys_clear(&k);
     mpz_clear(msg);
-    mpz_clear(risultato);
+    mpz_clear(decrypted_msg);
 
     return EXIT_SUCCESS;
 }
